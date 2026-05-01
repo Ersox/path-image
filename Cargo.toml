@@ -1,7 +1,13 @@
 [package]
 name = "path-image"
 version = "0.1.0"
-edition = "2024"
+edition = "2021"
+description = "A Rust library for working with image paths"
+authors = ["Ersox"]
+license = "MIT"
+repository = "https://github.com/ersox/path-image"
+homepage = "https://github.com/ersox/path-image"
+documentation = "https://docs.rs/path-image"
 
 [dependencies]
 image = "0.25.9"
