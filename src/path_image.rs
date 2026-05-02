@@ -2,6 +2,7 @@ use image::{DynamicImage, ImageError};
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 use std::ops::{Deref, DerefMut};
 use std::path::PathBuf;
+use crate::context;
 
 /// Image wrapper that pairs a DynamicImage with its source path.
 ///
@@ -62,10 +63,17 @@ impl Serialize for PathImage {
     }
 }
 
+
 /// Deserialization loads the image from disk using the stored path.
+/// If a deserialization context is set, validates that the path doesn't escape it.
 impl<'de> Deserialize<'de> for PathImage {
     fn deserialize<D: Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
         let path = PathBuf::deserialize(deserializer)?;
-        Self::new(&path).map_err(serde::de::Error::custom)
+
+        // Validate and resolve path within context
+        let resolved_path = context::resolve_path_in_context(&path)
+            .map_err(serde::de::Error::custom)?;
+
+        Self::new(&resolved_path).map_err(serde::de::Error::custom)
     }
 }
