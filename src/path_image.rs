@@ -8,7 +8,7 @@ use crate::context;
 ///
 /// Serializes to just the path; deserializes by loading from disk.
 /// Dereferences to the DynamicImage for transparent API usage.
-#[derive(Clone)]
+#[derive(Clone, PartialEq, Debug)]
 pub struct PathImage {
     image: DynamicImage,
     path: PathBuf,

@@ -1,4 +1,4 @@
-use ab_glyph::FontArc;
+use ab_glyph::{Font, FontArc};
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 use std::io;
 use std::ops::Deref;
@@ -9,7 +9,7 @@ use crate::context;
 ///
 /// Serializes to just the path; deserializes by loading from disk.
 /// Dereferences to the FontArc for transparent API usage.
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub struct PathFont {
     font: FontArc,
     path: PathBuf,
@@ -51,6 +51,12 @@ impl Deref for PathFont {
 
     fn deref(&self) -> &Self::Target {
         &self.font
+    }
+}
+
+impl PartialEq for PathFont {
+    fn eq(&self, other: &Self) -> bool {
+        self.font.font_data() == other.font.font_data()
     }
 }
 
