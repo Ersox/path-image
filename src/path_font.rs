@@ -60,6 +60,8 @@ impl PartialEq for PathFont {
     }
 }
 
+impl Eq for PathFont {}
+
 impl Serialize for PathFont {
     fn serialize<S: Serializer>(&self, serializer: S) -> Result<S::Ok, S::Error> {
         self.path.serialize(serializer)

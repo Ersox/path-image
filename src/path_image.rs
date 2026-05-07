@@ -14,6 +14,8 @@ pub struct PathImage {
     path: PathBuf,
 }
 
+impl Eq for PathImage {}
+
 impl PathImage {
     /// Create a PathImage by loading a DynamicImage from disk.
     pub fn new(path: impl Into<PathBuf>) -> Result<Self, ImageError> {
